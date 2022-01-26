@@ -37,6 +37,8 @@ jobs:
         password: ${{ secrets.PASSWORD }}
     - name: start package
       uses: appleboy/ssh-action@master
+      env:
+        REPO_NAME: ${{ github.event.repository.name }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
