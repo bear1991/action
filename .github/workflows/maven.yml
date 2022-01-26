@@ -31,7 +31,7 @@ jobs:
       uses: garygrossgarten/github-action-scp@release
       with:
         local: target/github-action-0.0.1-SNAPSHOT.jar
-        remote: /usr/local/app/actions/github-action-0.0.1-SNAPSHOT.jar
+        remote: /usr/local/app/actions/github-action.jar
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
@@ -44,4 +44,4 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /usr/local/app/actions
-          nohup java -jar github-action-0.0.1-SNAPSHOT.jar > action.log 2>&1 &
+          nohup java -jar github-action.jar > action.log 2>&1 &
