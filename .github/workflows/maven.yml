@@ -16,33 +16,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK 8
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'temurin'
+        java-version: '8'
+        distribution: 'adopt'
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
 
-#    - name: make artfact jar
-#      run: jar -cvfm github-action.jar src/main/resources/META-INF/MANIFEST.MF -C target/classes .
-    - name: copy file to ssh password
-      uses: appleboy/scp-action@master
+
+    - name: deploy package
+      uses: garygrossgarten/github-action-scp@release
       with:
+        local: target/github-action-0.0.1-SNAPSHOT.jar
+        remote: /usr/local/app/actions/github-action-0.0.1-SNAPSHOT.jar
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        source: "github-action.jar"
-        target: "/usr/local/app/actions"
-    - name: Connect server by SSH to Restart pm2
+    - name: start package
       uses: appleboy/ssh-action@master
-      env:
-        REPO_NAME: ${{ github.event.repository.name }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
         script: |
-            pm2 restart 0
+          cd /usr/local/app/actions
+          nohup java -jar github-action-0.0.1-SNAPSHOT.jar > action.log 2>&1 &
