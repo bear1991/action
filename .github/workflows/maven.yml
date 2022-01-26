@@ -30,7 +30,7 @@ jobs:
     - name: deploy package
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: target/github-action-0.0.1-SNAPSHOT.jar
+        local: target/github-action.jar
         remote: /usr/local/app/actions/github-action.jar
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
