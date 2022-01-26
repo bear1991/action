@@ -42,6 +42,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: |
-          cd /usr/local/app/actions
-          pm2 restart 1
+        script: ls
+
