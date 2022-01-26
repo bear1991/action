@@ -43,4 +43,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+          cd /usr/local/app/actions
           ./start.sh
