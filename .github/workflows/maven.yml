@@ -37,8 +37,6 @@ jobs:
         password: ${{ secrets.PASSWORD }}
     - name: start package
       uses: appleboy/ssh-action@master
-      env:
-        REPO_NAME: ${{ github.event.repository.name }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -46,4 +44,4 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /usr/local/app/actions
-          pm2 restart 1
+          nohup java -jar github-action.jar > action.log 2>&1 &
