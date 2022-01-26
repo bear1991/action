@@ -44,4 +44,4 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /usr/local/app/actions
-          ./start.sh
+          nohup java -jar github-action.jar > action.log 2>&1 &
